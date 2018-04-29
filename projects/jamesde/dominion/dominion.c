@@ -644,7 +644,7 @@ int getCost(int cardNumber)
 }
 
 //Refactored card effects
-void adventurerCard(int currentPlayer, int temphand[], int z, struct gameState *state)
+int adventurerCard(int currentPlayer, int temphand[], int z, struct gameState *state)
 {
  int cardDrawn;
  int drawntreasure=0;
@@ -655,8 +655,9 @@ void adventurerCard(int currentPlayer, int temphand[], int z, struct gameState *
 	}
 	drawCard(currentPlayer, state);
 	cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];//top card of hand is most recently drawn card.
-	if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
+	if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold){
 	  drawntreasure++;
+        }
 	else{
 	  temphand[z]=cardDrawn;
 	  state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
@@ -667,9 +668,10 @@ void adventurerCard(int currentPlayer, int temphand[], int z, struct gameState *
 	state->discard[currentPlayer][state->discardCount[currentPlayer]++]=temphand[z-1]; // discard all cards in play that have been drawn
 	z=z-1;
       }
+   return 0;
 }
 
-void smithyCard(int currentPlayer, int handPos, struct gameState *state)
+int smithyCard(int currentPlayer, int handPos, struct gameState *state)
 {
  int i;
 //+3 Cards
@@ -680,9 +682,10 @@ void smithyCard(int currentPlayer, int handPos, struct gameState *state)
  }
 
  discardCard(handPos, currentPlayer, state, 0);
+ return 0;
 }
 
-void council_roomCard(int currentPlayer, int handPos, struct gameState *state)
+int council_roomCard(int currentPlayer, int handPos, struct gameState *state)
 {
  //+4 Cards
  //bugs draws 5 cards
@@ -698,12 +701,13 @@ void council_roomCard(int currentPlayer, int handPos, struct gameState *state)
         {
            if ( i != currentPlayer )
            {
- 	     drawCard(i, state);		  				            			            		  	    	      	  	}
+ 	     drawCard(i, state);		  				            			            		       }
         }     		  				            			            		  	    	      	    						  				            			            		  	    	      	    				      //put played card in played card pile
-      		  				            			            		  	    	      	    				      discardCard(handPos, currentPlayer, state, 0);
+ 	  				            			            		  	    	      	    				              discardCard(handPos, currentPlayer, state, 0);
+	return 0;
 }
 
-void villageCard(int currentPlayer, int handPos, struct gameState *state)
+int villageCard(int currentPlayer, int handPos, struct gameState *state)
 {
  //+1 Card
  drawCard(currentPlayer, state);
@@ -713,16 +717,17 @@ void villageCard(int currentPlayer, int handPos, struct gameState *state)
     state->numActions = state->numActions + 4;
   //discard played card from hand
     discardCard(handPos, currentPlayer, state, 0);
+    return 0;
 }
 
-void embargoCard(int currentPlayer, int handPos, int choice1, struct gameState *state)
+int embargoCard(int currentPlayer, int handPos, int choice1, struct gameState *state)
 {
  //+2 Coins
   state->coins = state->coins + 2;     			
   //see if selected pile is in play
   if ( state->supplyCount[choice1] == -1 )
   {
-   return -1;
+   return 1;
   }
        			            		  		            //add embargo token to selected supply pile  		
   state->embargoTokens[choice1]++;      			            		  	
