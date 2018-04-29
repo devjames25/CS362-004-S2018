@@ -9,10 +9,10 @@
         -:    4:#include "rngs.h"
         -:    5:#include <stdlib.h>
         -:    6:
-        -:    7://Test full Deck Count function
+        -:    7://Test Shuffle function
         1:    8:int main(int argc, char **argv){
         -:    9: struct gameState Game;
-        1:   10: int a, random = 0;
+        1:   10: int a, random, player = 0;
         1:   11: int k[10] = {adventurer, gardens, embargo, village, minion, mine,
         -:   12:              cutpurse, sea_hag, tribute, smithy};
         1:   13: random = rand() % 10;
@@ -21,14 +21,17 @@
         1:   16: assert(a == 0);
         1:   17: printf("Unittest 3:\n");
         -:   18:
-        -:   19: //test bad case
-        1:   20: a = fullDeckCount(0, 13, &Game);
-        1:   21: assert(a == 0);
-        -:   22:
-        -:   23://test good case
-        -:   24: /*a = fullDeckCount(0, 4, &Game);
-        -:   25: assert(a == 0);*/
-        -:   26:
-        1:   27: printf("UNIT TEST 3 PASSED\n");
-        1:   28: return 0;
-        -:   29:}
+        -:   19: //Invalid testing
+        -:   20: //Bug is -1000 for the deckCount array in struct Game 
+        1:   21: Game.deckCount[player] = -1000;
+        1:   22: a = shuffle(player, &Game);
+        1:   23: assert(a == -1);
+        -:   24:
+        -:   25://Valid testing   
+        1:   26: Game.deckCount[player] = 5;
+        1:   27: a = shuffle(player, &Game);
+        1:   28: assert(a == 0);
+        -:   29: 
+        1:   30: printf("UNIT TEST 3 PASSED\n");
+        1:   31: return 0;
+        -:   32:}

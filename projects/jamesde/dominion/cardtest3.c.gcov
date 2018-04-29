@@ -3,7 +3,6 @@
         -:    0:Data:cardtest3.gcda
         -:    0:Runs:1
         -:    0:Programs:1
-        -:    0:Source is newer than graph
         -:    1:#include "assert.h"
         -:    2:#include "dominion.h"
         -:    3:#include <stdio.h>

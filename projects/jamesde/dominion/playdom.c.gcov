@@ -1,4 +1,7 @@
         -:    0:Source:playdom.c
+        -:    0:Graph:playdom.gcno
+        -:    0:Data:playdom.gcda
+        -:    0:Runs:1
         -:    0:Programs:1
         -:    1:#include "dominion.h"
         -:    2:#include <stdio.h>
