@@ -1,0 +1,150 @@
+        -:    0:Source:randomtestcard1.c
+        -:    0:Graph:randomtestcard1.gcno
+        -:    0:Data:randomtestcard1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "assert.h"
+        -:    2:#include "dominion.h"
+        -:    3:#include <stdio.h>
+        -:    4:#include "rngs.h"
+        -:    5:#include <stdlib.h>
+        -:    6:#include <time.h>
+        -:    7:
+function main called 1 returned 100% blocks executed 95%
+        1:    8:int main (int argc, char** argv) {
+        -:    9:	struct gameState Game;
+        1:   10:	int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse, 
+        -:   11:	             sea_hag, tribute, smithy};
+        1:   12:    int numberPlayers = 2;
+        1:   13:	int currentPlayer = 0;
+        1:   14:	int otherPlayer = 1;
+        -:   15:	int deckSize, handSize, deckPre, deckPost, handPre, handPost, handPostion, discardPre, discardPost, i, j;
+        -:   16:	int testNumAct, passed;
+        1:   17:	int handFail = 0;
+        1:   18:	int deckFail = 0;
+        1:   19:	int handFail2 = 0;
+        1:   20:	int deckFail2 = 0;
+        1:   21:	int numActionsFail = 0;
+        1:   22:	int testResult = 0;
+        -:   23:	int deckPre2, handPre2, deckPost2, handPost2, handPostion2;
+        -:   24:	
+        -:   25:	
+        1:   26:	srand(time(NULL));
+call    0 returned 100%
+call    1 returned 100%
+        1:   27:	printf("********Running Random Test for Council Room Card********\n");
+call    0 returned 100%
+   100001:   28:	for(i = 0; i < 100000; i++){
+branch  0 taken 99%
+branch  1 taken 1% (fallthrough)
+   100000:   29:		initializeGame(numberPlayers, k, 1000, &Game);
+call    0 returned 100%
+   100000:   30:		deckSize = rand() % (MAX_DECK + 1);
+call    0 returned 100%
+   100000:   31:		handSize = rand() % (deckSize + 1);
+call    0 returned 100%
+        -:   32:		
+   100000:   33:		Game.deckCount[0] = deckSize - handSize;
+   100000:   34:		Game.handCount[0] = handSize;
+        -:   35:		
+   100000:   36:		Game.deckCount[1] = deckSize - handSize;
+   100000:   37:		Game.handCount[1] = handSize;
+        -:   38:		
+   100000:   39:		handPostion = Game.hand[currentPlayer][Game.handCount[currentPlayer] - 1];
+   100000:   40:		handPostion2 = Game.hand[otherPlayer][Game.handCount[otherPlayer] - 1];
+        -:   41:		
+   100000:   42:		deckPre = Game.deckCount[0];
+   100000:   43:		printf("Deck Count Before for Player 1: %d\n", deckPre);
+call    0 returned 100%
+   100000:   44:		handPre = Game.handCount[0];
+   100000:   45:		printf("Hand Count Before for Player 1: %d\n", handPre);
+call    0 returned 100%
+        -:   46:		
+   100000:   47:		deckPre2 = Game.deckCount[1];
+   100000:   48:		printf("Deck Count Before for Player 2: %d\n", deckPre2);
+call    0 returned 100%
+   100000:   49:		handPre2 = Game.handCount[1];
+   100000:   50:		printf("Hand Count Before for Player 2: %d\n", handPre2);
+call    0 returned 100%
+        -:   51:		
+        -:   52:		
+   100000:   53:		council_roomCard(currentPlayer, handPostion, &Game);
+call    0 returned 100%
+        -:   54:		
+   100000:   55:		deckPost = Game.deckCount[0];
+   100000:   56:		printf("Deck Count After for Player 1: %d\n", deckPost);
+call    0 returned 100%
+   100000:   57:		handPost = Game.handCount[0];
+   100000:   58:		printf("Hand Count After for Player 1: %d\n", handPost);
+call    0 returned 100%
+        -:   59:		
+   100000:   60:		deckPost2 = Game.deckCount[1];
+   100000:   61:		printf("Deck Count Before for Player 2: %d\n", deckPost2);
+call    0 returned 100%
+   100000:   62:		handPost2 = Game.handCount[1];
+   100000:   63:		printf("Hand Count Before for Player 2: %d\n", handPost2);
+call    0 returned 100%
+        -:   64:	
+   100000:   65:	    passed = 1;
+        -:   66:		
+   100000:   67:		if(handPost != (handPre + 3)){
+branch  0 taken 99% (fallthrough)
+branch  1 taken 1%
+    99069:   68:			printf("Wrong number of cards were drawn: FAILED!!\n");
+call    0 returned 100%
+    99069:   69:			handFail++;
+    99069:   70:			passed = 0;
+        -:   71:		}
+        -:   72:		
+   100000:   73:		if(deckPost != (deckPre - 4)){
+branch  0 taken 99% (fallthrough)
+branch  1 taken 1%
+    99069:   74:			printf("Wrong number of cards were removed from player 1's deck: FAILED!!\n");
+call    0 returned 100%
+    99069:   75:			deckFail++;
+    99069:   76:			passed = 0;
+        -:   77:		}
+        -:   78:		
+        -:   79:		
+   100000:   80:		if(handPost2 != (handPre2 + 3)){
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+   100000:   81:			printf("Wrong number of cards were drawn: FAILED!!\n");
+call    0 returned 100%
+   100000:   82:			handFail2++;
+   100000:   83:			passed = 0;
+        -:   84:		}
+        -:   85:		
+   100000:   86:		if(deckPost2 != (deckPre2 - 4)){
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+   100000:   87:			printf("Wrong number of cards were removed from player 2's deck: FAILED!!\n");
+call    0 returned 100%
+   100000:   88:			deckFail2++;
+   100000:   89:			passed = 0;
+        -:   90:			
+        -:   91:		}
+        -:   92:		
+        -:   93:			
+   100000:   94:		if(passed == 1){
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   95:			printf("Council Room Card Test PASSED!!\n");
+call    0 never executed
+    #####:   96:			testResult++;
+        -:   97:		}
+        -:   98:	
+        -:   99:	}
+        1:  100:	printf("Number of Tests Passed: %d\n", testResult);
+call    0 returned 100%
+        1:  101:	printf("Incorrect amount in Player 1's deck: %d\n", deckFail);
+call    0 returned 100%
+        1:  102:	printf("Incorrect amount in Player 2's deck: %d\n", deckFail2);
+call    0 returned 100%
+        1:  103:	printf("Number of Council Room Cards Drawn to Player 1's Hand Failed: %d\n", handFail);
+call    0 returned 100%
+        1:  104:	printf("Number of Council Room Cards Drawn to Player 2's Hand Failed: %d\n", handFail2);
+call    0 returned 100%
+        -:  105:	
+        1:  106:	return 0;
+        -:  107:}
