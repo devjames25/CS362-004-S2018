@@ -66,8 +66,7 @@ int main (int argc, char** argv) {
 	coinPost = 0;
 	
 	for(d = 0; d < Game.handCount[currentPlayer]; d++){
-			if(Game.hanRandom Testing
-d[currentPlayer][d] == copper || Game.hand[currentPlayer][d] == silver || Game.hand[currentPlayer][d] == gold){
+			if(Game.hand[currentPlayer][d] == copper || Game.hand[currentPlayer][d] == silver || Game.hand[currentPlayer][d] == gold){
 			coinPost++;
 		}
 	}
